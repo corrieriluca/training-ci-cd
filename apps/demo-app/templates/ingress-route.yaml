@@ -8,6 +8,8 @@ spec:
   routes:
   {{- if .Values.preview.enabled }}
     - match: Host(`{{ .Values.ingressRoute.hostname }}`) && Headers(`{{ .Values.preview.header.name }}`, `{{ .Values.preview.header.value }}`)
+      kind: Rule
   {{- else }}
     - match: Host(`{{ .Values.host }}`)
+      kind: Rule
   {{- end }}
