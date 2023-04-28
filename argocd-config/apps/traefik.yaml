@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+spec:
+  project: infrastructure
+  source:
+    repoURL: https://github.com/corrieriluca/training-ci-cd
+    targetRevision: HEAD
+    path: ./apps/traefik
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    name: in-cluster
+    namespace: traefik
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

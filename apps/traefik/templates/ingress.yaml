@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traefik
+  labels:
+    name: traefik
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: demo-luca-terence.playground.padok.cloud
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: traefik
+                port:
+                  number: 80
