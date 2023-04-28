@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: infrastructure
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  # Allow manifests to deploy from any Git repos
+  sourceRepos:
+    - "*"
+  destinations:
+    - namespace: "*"
+      name: in-cluster

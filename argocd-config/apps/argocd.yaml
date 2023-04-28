@@ -1,16 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: app-of-apps
+  name: argocd
   namespace: argocd
 spec:
-  project: default
+  project: infrastructure
   source:
     repoURL: https://github.com/corrieriluca/training-ci-cd
     targetRevision: HEAD
-    path: ./argocd-config
-    directory:
-      recurse: true
+    path: ./apps/argocd
   destination:
     name: in-cluster
     namespace: argocd
