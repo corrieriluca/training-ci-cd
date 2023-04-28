@@ -17739,7 +17739,7 @@ spec:
     - host: argocd-luca-terence.playground.padok.cloud
       http:
         paths:
-          - pathType: ImplementationSpecific
+          - pathType: Prefix
             path: "/"
             backend:
               service:
