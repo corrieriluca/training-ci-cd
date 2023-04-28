@@ -23,8 +23,6 @@ spec:
           valueFiles:
             - values.yaml
           parameters:
-            - name: host
-              value: "demo-luca-terence-{{number}}.playground.padok.cloud"
             - name: preview.enabled
               value: "true"
             - name: preview.namespace
