@@ -7,8 +7,12 @@ spec:
     - web
   routes:
   {{- if .Values.preview.enabled }}
-    - match: Host(`{{ .Values.ingressRoute.hostname }}`) && Headers(`{{ .Values.preview.header.name }}`, `{{ .Values.preview.header.value }}`)
+    - match: Host(`{{ .Values.host }}`) && Headers(`{{ .Values.preview.header.name }}`, `{{ .Values.preview.header.value }}`)
       kind: Rule
+      services:
+        - name: {{ .Values.preview.service.name }}
+          namespace: {{ .Values.preview.namespace }}
+          port: http
   {{- else }}
     - match: Host(`{{ .Values.host }}`)
       kind: Rule

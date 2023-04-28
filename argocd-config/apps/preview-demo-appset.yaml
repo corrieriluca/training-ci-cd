@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: preview-demo-appset
+  namespace: argocd
+spec:
+  generators:
+    - pullRequest:
+        github:
+          owner: corrieriluca
+          repo: training-ci-cd
+        requeueAfterSeconds: 300
+  template:
+    metadata:
+      name: "demo-app-{{branch_slug}}-{{number}}"
+      namespace: argocd
+    spec:
+      source:
+        repoURL: "https://github.com/corrieriluca/training-ci-cd"
+        targetRevision: "{{head_sha}}"
+        path: ./apps/demo-app
+        helm:
+          valueFiles:
+            - values.yaml
+          parameters:
+            - name: host
+              value: "demo-luca-terence-{{number}}.playground.padok.cloud"
+            - name: preview.enabled
+              value: "true"
+            - name: preview.namespace
+              value: "demo-app-{{branch_slug}}-{{number}}"
+            - name: preview.service.name
+              value: "demo-app-{{branch_slug}}-{{number}}"
+            - name: preview.header.name
+              value: "X-Preview-PR"
+            - name: preview.header.value
+              value: "{{number}}"
+      project: app
+      destination:
+        name: in-cluster
+        namespace: "demo-app-{{branch_slug}}-{{number}}"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated:
+          selfHeal: true
+          prune: true
