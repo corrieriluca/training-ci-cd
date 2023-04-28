@@ -17733,18 +17733,15 @@ metadata:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 spec:
-  ingressClassName: nginx
+  ingressClassName: package-nginx
   rules:
     - host: argocd-luca-terence.playground.padok.cloud
       http:
         paths:
-          - pathType: Prefix
+          - pathType: ImplementationSpecific
             path: "/"
             backend:
               service:
                 name: argocd-server
                 port:
                   name: https
-  tls:
-    - hosts:
-        - argocd-luca-terence.playground.padok.cloud
