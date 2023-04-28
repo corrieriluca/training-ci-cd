@@ -9,7 +9,7 @@ spec:
         github:
           owner: corrieriluca
           repo: training-ci-cd
-        requeueAfterSeconds: 300
+        requeueAfterSeconds: 60
   template:
     metadata:
       name: "demo-app-{{branch_slug}}-{{number}}"
